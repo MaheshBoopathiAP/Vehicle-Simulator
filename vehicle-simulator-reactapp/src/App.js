@@ -24,7 +24,7 @@ const App = () => {
             <Route path="/scenarios" element={<AllScenarios/>} />
             <Route path="/edit-scenario/:id" element={<EditScenario/>} />
             <Route path="/vehicles" element={<VehicleList/>} />
-            <Route path="/Add-vehicle/:scenarioId" element={<AddVehicle />} /> {/* Assuming you have this component */}
+            <Route path="/Add-vehicle/:scenarioId" element={<AddVehicle />} />
             <Route path="edit-vehicle" element={<EditVehicle/>} />
 
           </Routes>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  faTrash,faPencilAlt , faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import {  faTrash,faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const HomePage = () => {
@@ -14,13 +16,6 @@ const HomePage = () => {
   const navigate = useNavigate(); 
   
   
-  // State for editing a vehicle
-  const [editVehicle, setEditVehicle] = useState(null);
-  const [editName, setEditName] = useState('');
-  const [editPositionX, setEditPositionX] = useState('');
-  const [editPositionY, setEditPositionY] = useState('');
-  const [editSpeed, setEditSpeed] = useState('');
-  const [editDirection, setEditDirection] = useState('');
   let counter = 0;
 
 
@@ -28,6 +23,7 @@ const HomePage = () => {
   const stopSimulation = () => {
     clearInterval(simulationInterval);
     console.log("Simulation stopped.", counter);
+    toast.info('Simulation stopped successfully');
     setSimulationInterval(null);
     console.log(simulationInterval);
     
@@ -38,6 +34,7 @@ const HomePage = () => {
 
     if(!selectedScenarioId) {
       console.log("Please select a scenario first.");
+      toast.error('Please select a scenario first.');
       return;
     }
 
@@ -46,10 +43,11 @@ const HomePage = () => {
     if (simulationInterval!=null) {
       console.log(simulationInterval);
       console.log("Simulation is already running.");
+      toast.error('Simulation is already running.');
       return;
     }
   
-  
+  toast.success('Simulation started successfully');
   
     const interval = setInterval(() => {
      
@@ -75,8 +73,8 @@ const HomePage = () => {
               break;
           }
   
-          newPositionX = Math.max(0, Math.min(newPositionX, 600)); // Assuming 600px width
-          newPositionY = Math.max(0, Math.min(newPositionY, 400)); // Assuming 400px height
+          newPositionX = Math.max(0, Math.min(newPositionX, 600)); 
+          newPositionY = Math.max(0, Math.min(newPositionY, 400));
   
           return { ...vehicle, initialPositionX: newPositionX, initialPositionY: newPositionY };
         });
@@ -87,6 +85,7 @@ const HomePage = () => {
   
       if (counter >= scenarioTime) {
         console.log("Scenario time reached. Stopping simulation.");
+        toast.success('Scenario time reached. Stopping simulation.');
         clearInterval(interval);
         setSimulationInterval(null);
         return;
@@ -100,11 +99,11 @@ const HomePage = () => {
   useEffect(() => {
     const fetchScenarios = async () => {
       try {
-        // const result = await axios.get('http://localhost:5000/scenarios');
         const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
         setScenarios(result.data);
       } catch (error) {
         console.error("Error fetching scenarios:", error);
+        toast.error('Failed to fetch scenarios');
       }
     };
     fetchScenarios();
@@ -113,16 +112,16 @@ const HomePage = () => {
   useEffect(() => {
     const fetchScenarios = async () => {
       try {
-        // const result = await axios.get('http://localhost:5000/scenarios');
         const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
         setScenarios(result.data);
        
         if (selectedScenarioId) {
           const scenarioResponse = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios/${selectedScenarioId}`);
-          setScenarioTime(scenarioResponse.data.time); // Assuming 'time' field exists in scenario response
+          setScenarioTime(scenarioResponse.data.time); 
         }
       } catch (error) {
         console.error("Error fetching scenarios:", error);
+        toast.error('Failed to fetch scenarios');
       }
     };
     fetchScenarios();
@@ -136,6 +135,7 @@ const HomePage = () => {
           setVehicles(result.data);
         } catch (error) {
           console.error("Error fetching vehicles:", error);
+          toast.error('Failed to fetch vehicles');
         }
       }
     };
@@ -148,62 +148,63 @@ const HomePage = () => {
     };
 
 
-  const handleEditSubmit = async () => {
-    try {
+  // const handleEditSubmit = async () => {
+  //   try {
      
-      if (!editName || !editPositionX || !editPositionY || !editSpeed || !editDirection) {
-        throw new Error('All fields are required.');
-      }
+  //     if (!editName || !editPositionX || !editPositionY || !editSpeed || !editDirection) {
+  //       throw new Error('All fields are required.');
+  //     }
   
-      const updatedVehicle = {
-        ...editVehicle,
-        name: editName,
-        initialPositionX: parseInt(editPositionX),
-        initialPositionY: parseInt(editPositionY),
-        speed: parseInt(editSpeed),
-        direction: editDirection
-      };
+  //     const updatedVehicle = {
+  //       ...editVehicle,
+  //       name: editName,
+  //       initialPositionX: parseInt(editPositionX),
+  //       initialPositionY: parseInt(editPositionY),
+  //       speed: parseInt(editSpeed),
+  //       direction: editDirection
+  //     };
   
      
-      await axios.put(`${process.env.REACT_APP_API_URL}/vehicles/${editVehicle.id}`, updatedVehicle);
+  //     await axios.put(`${process.env.REACT_APP_API_URL}/vehicles/${editVehicle.id}`, updatedVehicle);
   
   
-      setVehicles(prevVehicles => {
-        return prevVehicles.map(vehicle => {
-          if (vehicle.id === editVehicle.id) {
-            return updatedVehicle;
-          }
-          return vehicle;
-        });
-      });
+  //     setVehicles(prevVehicles => {
+  //       return prevVehicles.map(vehicle => {
+  //         if (vehicle.id === editVehicle.id) {
+  //           return updatedVehicle;
+  //         }
+  //         return vehicle;
+  //       });
+  //     });
   
       
-      setEditVehicle(null);
-      setEditName('');
-      setEditPositionX('');
-      setEditPositionY('');
-      setEditSpeed('');
-      setEditDirection('');
-      alert('Vehicle details updated successfully.');
-    } catch (error) {
-      // Handle errors
-      alert('Failed to update vehicle details: ' + error.message);
-    }
-  };
+  //     setEditVehicle(null);
+  //     setEditName('');
+  //     setEditPositionX('');
+  //     setEditPositionY('');
+  //     setEditSpeed('');
+  //     setEditDirection('');
+  //     alert('Vehicle details updated successfully.');
+  //   } catch (error) {
+  //     // Handle errors
+  //     alert('Failed to update vehicle details: ' + error.message);
+  //   }
+  // };
   
   const handleDelete = async (id) => {
-    // Send DELETE request to server
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/vehicles/${id}`);
-      // Update state to remove the deleted vehicle
       setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle.id !== id));
+      toast.success('Vehicle deleted successfully');
     } catch (error) {
       console.error("Error deleting vehicle:", error);
+      toast.error('Failed to delete vehicle');
     }
   };
 
   return (
     <div className='home'>
+      <ToastContainer />
       <div className='heading'>Scenario</div>
       <select onChange={(e) => setSelectedScenarioId(e.target.value)} required>
         <option value="">Select Scenario</option>

@@ -35,7 +35,7 @@ const EditVehicle = () => {
     try {
       await axios.put(`${process.env.REACT_APP_API_URL}/vehicles/${vehicle.id}`, editedVehicle);
       alert('Vehicle details updated successfully.');
-      window.history.back(); // Navigate back using window.history
+      window.history.back(); 
     } catch (error) {
       alert('Failed to update vehicle details: ' + error.message);
     }
@@ -68,12 +68,12 @@ const EditVehicle = () => {
     setInitialPositionY('');
     setSpeed('');
     setDirection('');
-    setWarningX(''); // Clear the warning message on reset
-    setWarningY(''); // Clear the warning message on reset
+    setWarningX('');
+    setWarningY('');
   };
 
   const handleCancel = () => {
-    window.history.back(); // Navigate back using window.history
+    window.history.back();
   };
 
   return (

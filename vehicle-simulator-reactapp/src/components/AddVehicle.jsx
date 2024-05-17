@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddVehicle = () => {
   const [scenarios, setScenarios] = useState([]);
@@ -12,11 +14,10 @@ const AddVehicle = () => {
   const [direction, setDirection] = useState('');
   const [warningX, setWarningX] = useState('');
   const [warningY, setWarningY] = useState('');
-  const location = useLocation(); // Access the current location
+  const location = useLocation(); 
 
   useEffect(() => {
     const fetchScenarios = async () => {
-      // const result = await axios.get('http://localhost:5000/scenarios');
       console.log('Fetching scenarios from:', `${process.env.REACT_APP_API_URL}/scenarios`);
       const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
       setScenarios(result.data);
@@ -48,7 +49,6 @@ const AddVehicle = () => {
     e.preventDefault();
 
     if (warningX || warningY) {
-      // Prevent form submission if there are any warnings
       return;
     }
 
@@ -61,7 +61,6 @@ const AddVehicle = () => {
       scenarioId: parseInt(scenarioId),
     };
 
-    // await axios.post('http://localhost:5000/vehicles', newVehicle);
     await axios.post(`${process.env.REACT_APP_API_URL}/vehicles`, newVehicle);
     setScenarioId('');
     setName('');
@@ -69,6 +68,7 @@ const AddVehicle = () => {
     setInitialPositionY('');
     setSpeed('');
     setDirection('');
+    toast.success('Vehicle added successfully');
   };
 
   const handleReset = (e) => {
@@ -79,8 +79,8 @@ const AddVehicle = () => {
     setInitialPositionY('');
     setSpeed('');
     setDirection('');
-    setWarningX(''); // Clear the warning message on reset
-    setWarningY(''); // Clear the warning message on reset
+    setWarningX(''); 
+    setWarningY(''); 
   };
 
   const handleGoBack = (e) => {
@@ -90,6 +90,7 @@ const AddVehicle = () => {
 
   return (
     <div className='add-vehicle'>
+       <ToastContainer />
       <h4 className='page-label'>{location.pathname}</h4>
       <h1>Add Vehicle</h1>
       <form onSubmit={handleSubmit} className='add-vehicle'>

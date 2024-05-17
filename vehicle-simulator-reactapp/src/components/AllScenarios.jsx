@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faTrash,faPencilAlt , faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AllScenarios = () => {
   const [scenarios, setScenarios] = useState([]);
@@ -11,7 +13,6 @@ const AllScenarios = () => {
 
   useEffect(() => {
     const fetchScenarios = async () => {
-      // const result = await axios.get('http://localhost:5000/scenarios');
       const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
       setScenarios(result.data);
       fetchVehicleCounts(result.data);
@@ -22,7 +23,6 @@ const AllScenarios = () => {
   const fetchVehicleCounts = async (scenarios) => {
     const counts = {};
     for (const scenario of scenarios) {
-      // const result = await axios.get(`http://localhost:5000/vehicles?scenarioId=${scenario.id}`);
       const result = await axios.get(`${process.env.REACT_APP_API_URL}/vehicles?scenarioId=${scenario.id}`);
       counts[scenario.id] = result.data.length;
     }
@@ -34,11 +34,9 @@ const AllScenarios = () => {
   };
 
   const handleDelete = async (id) => {
-    // Handle delete action
     console.log('Delete scenario with ID:', id);
-    // Perform axios delete request
-    // await axios.delete(`http://localhost:5000/scenarios/${id}`);
     await axios.delete(`${process.env.REACT_APP_API_URL}/scenarios/${id}`);
+    toast.success('Scenario deleted successfully');
     // Refetch scenarios after deletion
     const updatedScenarios = scenarios.filter(scenario => scenario.id !== id);
     setScenarios(updatedScenarios);
@@ -48,17 +46,32 @@ const AllScenarios = () => {
     navigate(`/add-vehicle/${id}`);
   };
 
+  const handleAddScenario = () => {
+    navigate('/Scenario/add');
+  };
+
+  const handleDeleteAll = async () => {
+    await axios.delete(`${process.env.REACT_APP_API_URL}/scenarios`);
+    setScenarios([]);
+    toast.success('All scenarios deleted successfully');
+  };
+
+  const handleAddVehicleTop = () => {
+    navigate('/Vehicle/add');
+  };
+
 
   return (
     <div className='scenario-list'>
+       <ToastContainer />
       <div className="all-scenario-top">
         <div>
         <h2>All Scenarios</h2>
         </div>
         <div className='buttons'>
-        <button className='add-scenario' onClick={() => window.location.href = '/add-scenario'}>New Scenario</button>
-        <button className='add-vehicle' onClick={() => window.location.href = '/add-scenario'}>Add Vehicle</button>
-        <button className='deleteall' onClick={() => window.location.href = '/add-scenario'}>Delete All</button>
+        <button className='add-scenario' onClick={handleAddScenario}>New Scenario</button>
+        <button className='add-vehicle' onClick={handleAddVehicleTop}>Add Vehicle</button>
+        <button className='deleteall' onClick={handleDeleteAll}>Delete All</button>
 
       </div>
       </div>
@@ -86,11 +99,7 @@ const AllScenarios = () => {
                   <FontAwesomeIcon icon={faPlusCircle} className='add' />
                 </button>
                 </td>
-              {/* <td>
-                <button>
-                  <FontAwesomeIcon icon={faEllipsisV} />
-                </button>
-                </td> */}
+             
               <td>
                 <button onClick={() => handleEdit(scenario.id)}>
                   <FontAwesomeIcon icon={faPencilAlt } className='edit'/>

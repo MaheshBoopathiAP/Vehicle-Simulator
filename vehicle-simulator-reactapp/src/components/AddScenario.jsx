@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddScenario = () => {
   const [name, setName] = useState('');
   const [time, setTime] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const location = useLocation(); // Access the current location
+  const location = useLocation(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
     
     const newScenario = { name, time: parseInt(time) };
     await axios.post(`${process.env.REACT_APP_API_URL}/scenarios`, newScenario);
     setName('');
     setTime('');
+    toast.success('Scenario added successfully');
   };
 
   const handleReset = () => {
     setName('');
     setTime('');
-    setSubmitted(false); // Reset the submitted state
   };
 
   const handleGoBack = () => {
@@ -30,6 +30,7 @@ const AddScenario = () => {
 
   return (
     <div className='add-scenario'>
+    <ToastContainer />
       <h4 className='page-label'>{location.pathname}</h4>
       <h1>Add Scenario</h1>
 
@@ -46,7 +47,6 @@ const AddScenario = () => {
               className='input-field'
             />
           </div>
-          {/* {!name && submitted && <div className="warning">Scenario is required</div>} */}
           <div className="inpt">
             <label>Scenario Time (Seconds)</label>
             <input
@@ -58,7 +58,6 @@ const AddScenario = () => {
               className='input-field'
             />
           </div>
-          {/* {!time && submitted && <div className="warning">Time is required</div>} */}
         </div>
 
         <div className="buttons">

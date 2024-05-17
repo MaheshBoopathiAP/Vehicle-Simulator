@@ -553,12 +553,12 @@
 
 .input-field::-webkit-inner-spin-button,
 .input-field::-webkit-outer-spin-button {
-  -webkit-appearance: none; /* Remove spinner arrows in Chrome/Safari */
-  margin: 0; /* Remove default margin */
+  -webkit-appearance: none; 
+  margin: 0;
 }
 
 .input-field::-moz-number-spin-box {
-  -moz-appearance: textfield; /* Remove spinner arrows in Firefox */
+  -moz-appearance: textfield; 
 }
 
 
@@ -580,7 +580,9 @@
 .warning {
   color: red;
   font-size: 0.8em;
-  background: red;
+  background: rgb(255, 192, 192);
+  border-radius: 5px;
+  padding: 4px;
   /* margin-top: 5px; */
 }
 
