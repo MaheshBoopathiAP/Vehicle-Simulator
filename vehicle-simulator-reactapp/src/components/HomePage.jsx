@@ -149,16 +149,24 @@ const HomePage = () => {
     navigate('/edit-vehicle', { state: { vehicle } });
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/vehicles/${id}`);
-      setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle.id !== id));
+const handleDelete = async (vehicleId) => {
+  try {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL}/vehicles/${vehicleId}`);
+    console.log(response);
+    if (response.status === 204 || response.status === 200) {
+      // Vehicle deleted successfully, update state
+      setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle.id !== vehicleId));
       toast.success('Vehicle deleted successfully');
-    } catch (error) {
-      console.error("Error deleting vehicle:", error);
+    } else {
       toast.error('Failed to delete vehicle');
+      throw new Error('Unexpected response status');
     }
-  };
+  } catch (error) {
+    console.error('Error deleting vehicle:', error);
+    // toast.error('Failed to delete vehicle');
+  }
+};
+
 
   return (
     <div className='home'>
