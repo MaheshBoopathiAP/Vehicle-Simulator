@@ -18,9 +18,14 @@ const AddVehicle = () => {
 
   useEffect(() => {
     const fetchScenarios = async () => {
-      console.log('Fetching scenarios from:', `${process.env.REACT_APP_API_URL}/scenarios`);
-      const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
-      setScenarios(result.data);
+      try {
+        console.log('Fetching scenarios from:', `${process.env.REACT_APP_API_URL}/scenarios`);
+        const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
+        setScenarios(result.data);
+      } catch (error) {
+        console.error("Error fetching scenarios", error);
+        toast.error("Failed to fetch scenarios");
+      }
     };
     fetchScenarios();
   }, []);
@@ -45,6 +50,12 @@ const AddVehicle = () => {
     }
   };
 
+  const handleScenarioChange = (e) => {
+    const value = e.target.value;
+    console.log('Selected scenario ID:', value);
+    setScenarioId(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,23 +63,35 @@ const AddVehicle = () => {
       return;
     }
 
+    if (!scenarioId) {
+      toast.error('Invalid scenario ID');
+      return;
+    }
+
     const newVehicle = {
       name,
-      initialPositionX: parseInt(initialPositionX),
-      initialPositionY: parseInt(initialPositionY),
-      speed: parseInt(speed),
+      initialPositionX: parseInt(initialPositionX, 10),
+      initialPositionY: parseInt(initialPositionY, 10),
+      speed: parseInt(speed, 10),
       direction,
-      scenarioId: parseInt(scenarioId),
+      scenarioId,
     };
 
-    await axios.post(`${process.env.REACT_APP_API_URL}/vehicles`, newVehicle);
-    setScenarioId('');
-    setName('');
-    setInitialPositionX('');
-    setInitialPositionY('');
-    setSpeed('');
-    setDirection('');
-    toast.success('Vehicle added successfully');
+    console.log('Submitting new vehicle:', newVehicle); 
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/vehicles`, newVehicle);
+      console.log('Response from server:', response);
+      setScenarioId('');
+      setName('');
+      setInitialPositionX('');
+      setInitialPositionY('');
+      setSpeed('');
+      setDirection('');
+      toast.success('Vehicle added successfully');
+    } catch (error) {
+      console.error("Error adding vehicle", error);
+      toast.error("Failed to add vehicle");
+    }
   };
 
   const handleReset = (e) => {
@@ -90,7 +113,7 @@ const AddVehicle = () => {
 
   return (
     <div className='add-vehicle'>
-       <ToastContainer />
+      <ToastContainer />
       <h4 className='page-label'>{location.pathname}</h4>
       <h1>Add Vehicle</h1>
       <form onSubmit={handleSubmit} className='add-vehicle'>
@@ -100,7 +123,7 @@ const AddVehicle = () => {
               <label>Scenario</label>
               <select
                 value={scenarioId}
-                onChange={(e) => setScenarioId(e.target.value)}
+                onChange={handleScenarioChange} 
                 required
                 className='input-field-select'
               >
