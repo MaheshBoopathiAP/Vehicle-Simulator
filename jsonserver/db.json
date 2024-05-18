@@ -11,31 +11,6 @@
       "time": 300
     },
     {
-      "id": "1cbe",
-      "name": "Mahesh",
-      "time": 200
-    },
-    {
-      "id": "3cf4",
-      "name": "mahesh",
-      "time": 120
-    },
-    {
-      "id": "70f1",
-      "name": "sfsadffadsfdfaas",
-      "time": 4
-    },
-    {
-      "id": "3089",
-      "name": "csfvdfbdbg",
-      "time": 456
-    },
-    {
-      "id": "fea7",
-      "name": "cdc",
-      "time": 456
-    },
-    {
       "id": "15ed",
       "name": "Shara",
       "time": 20
@@ -91,24 +66,6 @@
       "speed": 5,
       "direction": "Upwards",
       "scenarioId": 1
-    },
-    {
-      "id": "6db0",
-      "name": "Th1",
-      "initialPositionX": 120,
-      "initialPositionY": 240,
-      "speed": 3,
-      "direction": "Towards",
-      "scenarioId": 685
-    },
-    {
-      "id": "1c0e",
-      "name": "Th2",
-      "initialPositionX": 200,
-      "initialPositionY": 180,
-      "speed": 4,
-      "direction": "Upwards",
-      "scenarioId": 685
     }
   ],
   "routes": {
