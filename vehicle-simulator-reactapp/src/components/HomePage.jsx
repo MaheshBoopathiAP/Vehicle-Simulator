@@ -31,7 +31,7 @@ const HomePage = () => {
   };
 
   const startSimulation = () => {
-    if(!selectedScenarioId) {
+    if (!selectedScenarioId) {
       console.log("Please select a scenario first.");
       toast.error('Please select a scenario first.');
       return;
@@ -138,7 +138,13 @@ const HomePage = () => {
 
     fetchVehicles();
   }, [selectedScenarioId]);
-    
+  
+  useEffect(() => {
+    if (simulationInterval) {
+      stopSimulation();
+    }
+  }, [selectedScenarioId]);
+
   const handleEdit = (vehicle) => {
     navigate('/edit-vehicle', { state: { vehicle } });
   };
