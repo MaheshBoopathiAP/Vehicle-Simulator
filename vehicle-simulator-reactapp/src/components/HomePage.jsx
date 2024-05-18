@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  faTrash,faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const HomePage = () => {
   const [scenarios, setScenarios] = useState([]);
@@ -15,47 +14,44 @@ const HomePage = () => {
   const [scenarioTime, setScenarioTime] = useState(null);
   const navigate = useNavigate(); 
   
-  
   let counter = 0;
-
-
   
+  const colors = ["red", "blue", "green", "orange", "purple", "cyan", "magenta"];
+
+  const getColorForVehicle = (index) => {
+    return colors[index % colors.length];
+  };
+
   const stopSimulation = () => {
     clearInterval(simulationInterval);
     console.log("Simulation stopped.", counter);
     toast.info('Simulation stopped successfully');
     setSimulationInterval(null);
     console.log(simulationInterval);
-    
   };
-  
 
   const startSimulation = () => {
-
     if(!selectedScenarioId) {
       console.log("Please select a scenario first.");
       toast.error('Please select a scenario first.');
       return;
     }
 
-
-
-    if (simulationInterval!=null) {
+    if (simulationInterval != null) {
       console.log(simulationInterval);
       console.log("Simulation is already running.");
       toast.error('Simulation is already running.');
       return;
     }
-  
-  toast.success('Simulation started successfully');
-  
+
+    toast.success('Simulation started successfully');
+
     const interval = setInterval(() => {
-     
       setVehicles(prevVehicles => {
         return prevVehicles.map(vehicle => {
           let newPositionX = vehicle.initialPositionX;
           let newPositionY = vehicle.initialPositionY;
-  
+
           switch (vehicle.direction) {
             case 'Towards':
               newPositionX += vehicle.speed;
@@ -72,17 +68,17 @@ const HomePage = () => {
             default:
               break;
           }
-  
-          newPositionX = Math.max(0, Math.min(newPositionX, 600)); 
-          newPositionY = Math.max(0, Math.min(newPositionY, 400));
-  
+
+          newPositionX = Math.max(0, Math.min(newPositionX, 1050)); 
+          newPositionY = Math.max(0, Math.min(newPositionY, 450));
+
           return { ...vehicle, initialPositionX: newPositionX, initialPositionY: newPositionY };
         });
       });
-  
+
       counter++;
-      console.log("Simulation running for", counter, "seconds. Scenario time:", scenarioTime, "simulation time" , simulationInterval);
-  
+      console.log("Simulation running for", counter, "seconds. Scenario time:", scenarioTime, "simulation time", simulationInterval);
+
       if (counter >= scenarioTime) {
         console.log("Scenario time reached. Stopping simulation.");
         toast.success('Scenario time reached. Stopping simulation.');
@@ -90,8 +86,8 @@ const HomePage = () => {
         setSimulationInterval(null);
         return;
       }
-    }, 1000); 
-  
+    }, 1000);
+
     setSimulationInterval(interval);
     console.log("Simulation started.", interval);
   };
@@ -143,54 +139,10 @@ const HomePage = () => {
     fetchVehicles();
   }, [selectedScenarioId]);
     
-    const handleEdit = (vehicle) => {
-      navigate('/edit-vehicle', { state: { vehicle } });
-    };
+  const handleEdit = (vehicle) => {
+    navigate('/edit-vehicle', { state: { vehicle } });
+  };
 
-
-  // const handleEditSubmit = async () => {
-  //   try {
-     
-  //     if (!editName || !editPositionX || !editPositionY || !editSpeed || !editDirection) {
-  //       throw new Error('All fields are required.');
-  //     }
-  
-  //     const updatedVehicle = {
-  //       ...editVehicle,
-  //       name: editName,
-  //       initialPositionX: parseInt(editPositionX),
-  //       initialPositionY: parseInt(editPositionY),
-  //       speed: parseInt(editSpeed),
-  //       direction: editDirection
-  //     };
-  
-     
-  //     await axios.put(`${process.env.REACT_APP_API_URL}/vehicles/${editVehicle.id}`, updatedVehicle);
-  
-  
-  //     setVehicles(prevVehicles => {
-  //       return prevVehicles.map(vehicle => {
-  //         if (vehicle.id === editVehicle.id) {
-  //           return updatedVehicle;
-  //         }
-  //         return vehicle;
-  //       });
-  //     });
-  
-      
-  //     setEditVehicle(null);
-  //     setEditName('');
-  //     setEditPositionX('');
-  //     setEditPositionY('');
-  //     setEditSpeed('');
-  //     setEditDirection('');
-  //     alert('Vehicle details updated successfully.');
-  //   } catch (error) {
-  //     // Handle errors
-  //     alert('Failed to update vehicle details: ' + error.message);
-  //   }
-  // };
-  
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/vehicles/${id}`);
@@ -225,11 +177,10 @@ const HomePage = () => {
             <th>Direction</th>
             <th>Edit</th>
             <th>Delete</th>
-           
           </tr>
         </thead>
         <tbody className='table-body'>
-          {vehicles.map(vehicle => (
+          {vehicles.map((vehicle, index) => (
             <tr key={vehicle.id}>
               <td>{vehicle.id}</td>
               <td>{vehicle.name}</td>
@@ -239,14 +190,13 @@ const HomePage = () => {
               <td>{vehicle.direction}</td>
               <td>
                 <button onClick={() => handleEdit(vehicle)}>
-                  <FontAwesomeIcon icon={faPencilAlt } className='edit'/>
+                  <FontAwesomeIcon icon={faPencilAlt} className='edit' />
                 </button>
-                </td>
+              </td>
               <td>
                 <button onClick={() => handleDelete(vehicle.id)}>
                   <FontAwesomeIcon icon={faTrash} className='delete' />
                 </button>
-                
               </td>
             </tr>
           ))}
@@ -254,34 +204,32 @@ const HomePage = () => {
       </table>
 
       <div className="buttons">
-        <button className='start-simulation' onClick={startSimulation} >
+        <button className='start-simulation' onClick={startSimulation}>
           Start Simulation
         </button>
-        <button className='stop-simulation' onClick={stopSimulation} >
+        <button className='stop-simulation' onClick={stopSimulation}>
           Stop Simulation
         </button>
       </div>
 
-
       <div className="graph-container">
-  {vehicles.map(vehicle => (
-    // Check if the vehicle's position is within the bounds of the scenario
-    (vehicle.initialPositionX > 0 && vehicle.initialPositionX <= 1000 &&
-     vehicle.initialPositionY > 0 && vehicle.initialPositionY <= 450) &&
-    <div 
-      className='vehicle'
-      key={vehicle.id} 
-      style={{
-        position: 'absolute',
-        left: vehicle.initialPositionX,
-        top: vehicle.initialPositionY
-      }}
-    >
-      {vehicle.name}
-    </div>
-  ))}
-</div>
-
+        {vehicles.map((vehicle, index) => (
+          (vehicle.initialPositionX > 0 && vehicle.initialPositionX <= 1050 &&
+           vehicle.initialPositionY > 0 && vehicle.initialPositionY <= 450) &&
+          <div 
+            className='vehicle'
+            key={vehicle.id} 
+            style={{
+              position: 'absolute',
+              left: vehicle.initialPositionX,
+              top: vehicle.initialPositionY,
+              backgroundColor: getColorForVehicle(index)
+            }}
+          >
+            {vehicle.id}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

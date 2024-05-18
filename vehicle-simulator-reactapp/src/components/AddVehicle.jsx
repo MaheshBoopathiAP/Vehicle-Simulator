@@ -28,8 +28,8 @@ const AddVehicle = () => {
   const handlePositionXChange = (e) => {
     const value = e.target.value;
     setInitialPositionX(value);
-    if (value > 600 || value < 0) {
-      setWarningX('Position X should not be > 600 and < 0');
+    if (value > 1050 || value < 0) {
+      setWarningX('Position X should not be > 1050 and < 0');
     } else {
       setWarningX('');
     }
@@ -38,8 +38,8 @@ const AddVehicle = () => {
   const handlePositionYChange = (e) => {
     const value = e.target.value;
     setInitialPositionY(value);
-    if (value > 400 || value < 0) {
-      setWarningY('Position Y should not be > 400 and < 0');
+    if (value > 450 || value < 0) {
+      setWarningY('Position Y should not be > 450 and < 0');
     } else {
       setWarningY('');
     }
