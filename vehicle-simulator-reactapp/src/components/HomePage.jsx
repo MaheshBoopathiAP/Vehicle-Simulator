@@ -126,19 +126,19 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchVehicles = async () => {
-      if (selectedScenarioId) {
-        try {
-          const vehicles = await getVehiclesByScenarioId(selectedScenarioId);
-          setVehicles(vehicles);
-        } catch (error) {
-          console.error("Error fetching vehicles:", error);
-          toast.error('Failed to fetch vehicles');
+      try {
+        if (selectedScenarioId) {
+          // Call the getVehiclesByScenarioId function to fetch vehicles by scenario ID
+          const vehiclesData = await getVehiclesByScenarioId(selectedScenarioId);
+          setVehicles(vehiclesData);
         }
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
       }
     };
 
     fetchVehicles();
-  }, [selectedScenarioId]);
+  }, [selectedScenarioId]); // Fetch vehicles whenever selectedScenarioId changes
   
   useEffect(() => {
     if (simulationInterval) {

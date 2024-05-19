@@ -1,9 +1,8 @@
 import axios from 'axios';
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import api from './api';
 
 export const getAllVehicles = async () => {
-  const response = await axios.get(`${apiUrl}/vehicles`, {
+  const response = await api.get(`/vehicles`, {
     headers: {
       'Cache-Control': 'no-cache'
     }
@@ -12,7 +11,7 @@ export const getAllVehicles = async () => {
 };
 
 export const getVehicleById = async (id) => {
-  const response = await axios.get(`${apiUrl}/vehicles/${id}`, {
+  const response = await api.get(`/vehicles/${id}`, {
     headers: {
       'Cache-Control': 'no-cache'
     }
@@ -21,22 +20,22 @@ export const getVehicleById = async (id) => {
 };
 
 export const createVehicle = async (vehicle) => {
-  const response = await axios.post(`${apiUrl}/vehicles`, vehicle);
+  const response = await api.post(`/vehicles`, vehicle);
   return response.data;
 };
 
 export const updateVehicle = async (id, vehicle) => {
-  const response = await axios.put(`${apiUrl}/vehicles/${id}`, vehicle);
+  const response = await api.put(`/vehicles/${id}`, vehicle);
   return response.data;
 };
 
 export const deleteVehicle = async (id) => {
-  const response = await axios.delete(`${apiUrl}/vehicles/${id}`);
+  const response = await api.delete(`/vehicles/${id}`);
   return response.data;
 };
 
 export const getVehiclesByScenarioId = async (scenarioId) => {
-  const response = await axios.get(`${apiUrl}/vehicles?scenarioId=${scenarioId}`, {
+  const response = await api.get(`/vehicles?scenarioId=${scenarioId}`, {
     headers: {
       'Cache-Control': 'no-cache'
     }
