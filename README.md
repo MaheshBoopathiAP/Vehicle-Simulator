@@ -11,9 +11,7 @@
            - Install the node_modules using command "npm install"
            - Then run the app by using command "npm run start"
 
-<p align="center">
-  <img src="../Vehicle-Simulator/vehicle-simulator-reactapp/public/images/proj-struct.jpg" alt="Image Description">
-</p>
+![image](../Vehicle-Simulator/vehicle-simulator-reactapp/public/images/proj-struct.jpg)
 
 - The Backend will run on the port 5000
 - The Frontend will run on the port 3000
