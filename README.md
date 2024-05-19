@@ -11,7 +11,7 @@
            - Install the node_modules using command "npm install"
            - Then run the app by using command "npm run start"
 
-![image](https://github.com/MaheshBoopathiAP/Vehicle-Simulator/assets/114137472/1a7c61f6-e977-4a95-9c7e-ba9af58c9edf)
+![image](../Vehicle-Simulator/vehicle-simulator-reactapp/public/images/proj-struct.jpg)
 
 - The Backend will run on the port 5000
 - The Frontend will run on the port 3000
