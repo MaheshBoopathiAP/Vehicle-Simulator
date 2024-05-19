@@ -228,8 +228,8 @@ const handleDelete = async (vehicleId) => {
 
       <div className="graph-container">
         {vehicles.map((vehicle, index) => (
-          (vehicle.initialPositionX > 0 && vehicle.initialPositionX <= 1050 &&
-           vehicle.initialPositionY > 0 && vehicle.initialPositionY <= 450) &&
+          (vehicle.initialPositionX > 0 && vehicle.initialPositionX < 1050 &&
+           vehicle.initialPositionY > 0 && vehicle.initialPositionY < 450) &&
           <div 
             className='vehicle'
             key={vehicle.id} 
