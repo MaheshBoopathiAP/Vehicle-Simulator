@@ -25,4 +25,4 @@ About the Project:
 - The components module contains all the pages of the application.
 - The services module contains the api service modules which handles the interactions with your application's backend API and it contains methods for performing CRUD (Create, Read, Update, Delete) operations on resources like users, scenarios, vehicles, etc.
 - The services modules use libraries like Axios to make HTTP requests to the API endpoints.
-- The styles module contains the css file for all the pages in the application.
+- The styles module contains the CSS file for all the pages in the application.
