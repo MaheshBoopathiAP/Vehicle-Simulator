@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createScenario } from '../services/scenarioService';
 
 const AddScenario = () => {
   const [name, setName] = useState('');
@@ -13,10 +13,14 @@ const AddScenario = () => {
     e.preventDefault();
     
     const newScenario = { name, time: parseInt(time) };
-    await axios.post(`${process.env.REACT_APP_API_URL}/scenarios`, newScenario);
-    setName('');
-    setTime('');
-    toast.success('Scenario added successfully');
+    try {
+      await createScenario(newScenario);
+      setName('');
+      setTime('');
+      toast.success('Scenario added successfully');
+    } catch (error) {
+      toast.error('Failed to add scenario');
+    }
   };
 
   const handleReset = () => {
@@ -30,7 +34,7 @@ const AddScenario = () => {
 
   return (
     <div className='add-scenario'>
-    <ToastContainer />
+      <ToastContainer />
       <h4 className='page-label'>{location.pathname}</h4>
       <h1>Add Scenario</h1>
 

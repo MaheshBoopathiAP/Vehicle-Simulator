@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getScenarioById, updateScenario } from '../services/scenarioService';
 
 const EditScenario = () => {
   const [name, setName] = useState('');
@@ -14,9 +14,9 @@ const EditScenario = () => {
   useEffect(() => {
     const fetchScenario = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios/${id}`);
-        setName(response.data.name);
-        setTime(response.data.time);
+        const scenario = await getScenarioById(id);
+        setName(scenario.name);
+        setTime(scenario.time.toString()); 
       } catch (error) {
         console.error('Error fetching scenario:', error);
         toast.error('Failed to fetch scenario');
@@ -28,15 +28,20 @@ const EditScenario = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedScenario = { name, time: parseInt(time) };
-    await axios.put(`${process.env.REACT_APP_API_URL}/scenarios/${id}`, updatedScenario);
-    toast.success('Scenario updated successfully');
-    setName('');
-    setTime('');
-   
-    setTimeout(() => {
-      navigate('/');
-    }, 2000);
+    try {
+      const updatedScenario = { name, time: parseInt(time) };
+      await updateScenario(id, updatedScenario);
+      toast.success('Scenario updated successfully');
+      setName('');
+      setTime('');
+      
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } catch (error) {
+      console.error('Error updating scenario:', error);
+      toast.error('Failed to update scenario');
+    }
   };
 
   const handleReset = () => {

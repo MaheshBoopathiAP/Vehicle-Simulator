@@ -5,7 +5,7 @@ import AddVehicle from './components/AddVehicle';
 import HomePage from './components/HomePage';
 import Sidebar from './components/Sidebar';
 import VehicleList from './components/VehicleList';
-import './App.css';
+import './styles/global.css';
 import AllScenarios from './components/AllScenarios';
 import EditVehicle from './components/EditVehicle';
 import EditScenario from './components/EditScenario';

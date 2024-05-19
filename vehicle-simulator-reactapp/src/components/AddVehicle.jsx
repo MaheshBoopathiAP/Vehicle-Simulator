@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllScenarios } from '../services/scenarioService';
+import { createVehicle } from '../services/vehicleService';
 
 const AddVehicle = () => {
   const [scenarios, setScenarios] = useState([]);
@@ -14,16 +15,14 @@ const AddVehicle = () => {
   const [direction, setDirection] = useState('');
   const [warningX, setWarningX] = useState('');
   const [warningY, setWarningY] = useState('');
-  const location = useLocation(); 
+  const location = useLocation();
 
   useEffect(() => {
     const fetchScenarios = async () => {
       try {
-        console.log('Fetching scenarios from:', `${process.env.REACT_APP_API_URL}/scenarios`);
-        const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
-        setScenarios(result.data);
+        const result = await getAllScenarios();
+        setScenarios(result);
       } catch (error) {
-        console.error("Error fetching scenarios", error);
         toast.error("Failed to fetch scenarios");
       }
     };
@@ -52,7 +51,6 @@ const AddVehicle = () => {
 
   const handleScenarioChange = (e) => {
     const value = e.target.value;
-    console.log('Selected scenario ID:', value);
     setScenarioId(value);
   };
 
@@ -77,10 +75,8 @@ const AddVehicle = () => {
       scenarioId,
     };
 
-    console.log('Submitting new vehicle:', newVehicle); 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/vehicles`, newVehicle);
-      console.log('Response from server:', response);
+      await createVehicle(newVehicle);
       setScenarioId('');
       setName('');
       setInitialPositionX('');
@@ -89,7 +85,6 @@ const AddVehicle = () => {
       setDirection('');
       toast.success('Vehicle added successfully');
     } catch (error) {
-      console.error("Error adding vehicle", error);
       toast.error("Failed to add vehicle");
     }
   };
@@ -102,8 +97,8 @@ const AddVehicle = () => {
     setInitialPositionY('');
     setSpeed('');
     setDirection('');
-    setWarningX(''); 
-    setWarningY(''); 
+    setWarningX('');
+    setWarningY('');
   };
 
   const handleGoBack = (e) => {
@@ -123,7 +118,7 @@ const AddVehicle = () => {
               <label>Scenario</label>
               <select
                 value={scenarioId}
-                onChange={handleScenarioChange} 
+                onChange={handleScenarioChange}
                 required
                 className='input-field-select'
               >

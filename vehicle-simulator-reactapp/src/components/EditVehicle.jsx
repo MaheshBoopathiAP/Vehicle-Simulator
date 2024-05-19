@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import { updateVehicle } from '../services/vehicleService';
 const EditVehicle = () => {
-    const location = useLocation();
-    const vehicle = location.state?.vehicle;
-  
+  const location = useLocation();
+  const vehicle = location.state?.vehicle;
+
   const [name, setName] = useState('');
   const [initialPositionX, setInitialPositionX] = useState('');
   const [initialPositionY, setInitialPositionY] = useState('');
@@ -24,6 +23,9 @@ const EditVehicle = () => {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    if (warningX || warningY) {
+      return;
+    }
     const editedVehicle = {
       ...vehicle,
       name,
@@ -33,9 +35,9 @@ const EditVehicle = () => {
       direction,
     };
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}/vehicles/${vehicle.id}`, editedVehicle);
+      await updateVehicle(vehicle.id, editedVehicle);
       alert('Vehicle details updated successfully.');
-      window.history.back(); 
+      window.history.back();
     } catch (error) {
       alert('Failed to update vehicle details: ' + error.message);
     }
@@ -78,56 +80,56 @@ const EditVehicle = () => {
 
   return (
     <div className='edit-vehicle'>
-      <h1 >Edit Vehicle</h1>
+      <h1>Edit Vehicle</h1>
       <form onSubmit={handleEditSubmit} >
         <div className="edit-vehicle-form">
-            <div className="first-row-inputs">
-                <div className="inpt">
-                    <label>Vehicle Name: </label>
-                    <input
-                     className='input-field'
-                      type="text" 
-                      value={name} 
-                      onChange={(e) => setName(e.target.value)} />
-                </div>
-                <div className="inpt">
-                    <label>Position X: </label>
-                    <input 
-                     className='input-field'
-                      type="number"
-                       value={initialPositionX}
-                        onChange={handlePositionXChange} />
-                
-                </div>
-                <div className="inpt">
-                    <label>Position Y: </label>
-                    <input
-                     className='input-field'
-                      type="number"
-                       value={initialPositionY}
-                        onChange={handlePositionYChange} />
-                </div>
+          <div className="first-row-inputs">
+            <div className="inpt">
+              <label>Vehicle Name: </label>
+              <input
+                className='input-field'
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)} />
             </div>
-            <div className="second-row-inputs">
-                <div className="inpt">
-                    <label>Speed: </label>
-                    <input className='input-field' type="number" value={speed} onChange={(e) => setSpeed(e.target.value)} />
-                </div>
-                <div className="inpt">
-                    <label>Direction: </label>
-                    <select className='input-field' value={direction} onChange={(e) => setDirection(e.target.value)}>
-                      <option value="Towards">Towards</option>
-                      <option value="Backwards">Backwards</option>
-                      <option value="Upwards">Upwards</option>
-                      <option value="Downwards">Downwards</option>
-                    </select>
-                </div>
-               </div>
+            <div className="inpt">
+              <label>Position X: </label>
+              <input
+                className='input-field'
+                type="number"
+                value={initialPositionX}
+                onChange={handlePositionXChange} />
+
             </div>
+            <div className="inpt">
+              <label>Position Y: </label>
+              <input
+                className='input-field'
+                type="number"
+                value={initialPositionY}
+                onChange={handlePositionYChange} />
+            </div>
+          </div>
+          <div className="second-row-inputs">
+            <div className="inpt">
+              <label>Speed: </label>
+              <input className='input-field' type="number" value={speed} onChange={(e) => setSpeed(e.target.value)} />
+            </div>
+            <div className="inpt">
+              <label>Direction: </label>
+              <select className='input-field' value={direction} onChange={(e) => setDirection(e.target.value)}>
+                <option value="Towards">Towards</option>
+                <option value="Backwards">Backwards</option>
+                <option value="Upwards">Upwards</option>
+                <option value="Downwards">Downwards</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div className="buttons">
-            <button className='add' type="submit">Submit</button>
-            <button className='reset' onClick={handleReset} >Reset</button>
-            <button className='back' onClick={handleCancel}>Cancel</button>
+          <button className='add' type="submit">Submit</button>
+          <button className='reset' onClick={handleReset} >Reset</button>
+          <button className='back' onClick={handleCancel}>Cancel</button>
         </div>
       </form>
     </div>

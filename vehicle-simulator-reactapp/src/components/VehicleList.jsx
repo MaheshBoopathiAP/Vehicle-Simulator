@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getAllVehicles } from '../services/vehicleService'; 
 
 const VehicleList = () => {
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
     const fetchVehicles = async () => {
-      const result = await axios.get(`${process.env.REACT_APP_API_URL}/vehicles`);
-      setVehicles(result.data);
+      try {
+        const vehiclesData = await getAllVehicles(); 
+        setVehicles(vehiclesData);
+      } catch (error) {
+        console.error("Error fetching vehicles:", error);
+      }
     };
     fetchVehicles();
   }, []);

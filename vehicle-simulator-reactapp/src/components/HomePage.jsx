@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllScenarios, getScenarioById } from '../services/scenarioService';
+import { getVehiclesByScenarioId, deleteVehicle } from '../services/vehicleService';
 
 const HomePage = () => {
   const [scenarios, setScenarios] = useState([]);
@@ -95,8 +96,8 @@ const HomePage = () => {
   useEffect(() => {
     const fetchScenarios = async () => {
       try {
-        const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
-        setScenarios(result.data);
+        const scenarios = await getAllScenarios();
+        setScenarios(scenarios);
       } catch (error) {
         console.error("Error fetching scenarios:", error);
         toast.error('Failed to fetch scenarios');
@@ -106,29 +107,29 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    const fetchScenarios = async () => {
+    const fetchScenariosAndScenarioTime = async () => {
       try {
-        const result = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios`);
-        setScenarios(result.data);
+        const scenarios = await getAllScenarios();
+        setScenarios(scenarios);
        
         if (selectedScenarioId) {
-          const scenarioResponse = await axios.get(`${process.env.REACT_APP_API_URL}/scenarios/${selectedScenarioId}`);
-          setScenarioTime(scenarioResponse.data.time); 
+          const scenario = await getScenarioById(selectedScenarioId);
+          setScenarioTime(scenario.time); 
         }
       } catch (error) {
         console.error("Error fetching scenarios:", error);
         toast.error('Failed to fetch scenarios');
       }
     };
-    fetchScenarios();
+    fetchScenariosAndScenarioTime();
   }, [selectedScenarioId]);
 
   useEffect(() => {
     const fetchVehicles = async () => {
       if (selectedScenarioId) {
         try {
-          const result = await axios.get(`${process.env.REACT_APP_API_URL}/vehicles?scenarioId=${selectedScenarioId}`);
-          setVehicles(result.data);
+          const vehicles = await getVehiclesByScenarioId(selectedScenarioId);
+          setVehicles(vehicles);
         } catch (error) {
           console.error("Error fetching vehicles:", error);
           toast.error('Failed to fetch vehicles');
@@ -149,24 +150,16 @@ const HomePage = () => {
     navigate('/edit-vehicle', { state: { vehicle } });
   };
 
-const handleDelete = async (vehicleId) => {
-  try {
-    const response = await axios.delete(`${process.env.REACT_APP_API_URL}/vehicles/${vehicleId}`);
-    console.log(response);
-    if (response.status === 204 || response.status === 200) {
-      // Vehicle deleted successfully, update state
+  const handleDelete = async (vehicleId) => {
+    try {
+      await deleteVehicle(vehicleId);
       setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle.id !== vehicleId));
       toast.success('Vehicle deleted successfully');
-    } else {
+    } catch (error) {
+      console.error('Error deleting vehicle:', error);
       toast.error('Failed to delete vehicle');
-      throw new Error('Unexpected response status');
     }
-  } catch (error) {
-    console.error('Error deleting vehicle:', error);
-    // toast.error('Failed to delete vehicle');
-  }
-};
-
+  };
 
   return (
     <div className='home'>

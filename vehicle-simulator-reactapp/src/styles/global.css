@@ -1,0 +1,796 @@
+.app {
+    display: flex;
+    background-color: #000;
+    color: #000;
+  }
+  
+  .sidebar {
+    position: sticky;
+    top: 0;
+    width: 300px;
+    background: #c1c8d2;
+    height: 100vh; 
+    font-size: 20px;
+    font-weight: 400;
+  }
+  
+  .sidebar-list {
+  
+    padding-top: 50px;
+  }
+  
+  .sidebar a {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    text-decoration: none;
+    color: #000;
+    align-items: end;
+    justify-content: center;
+    text-align: start;
+  }
+  
+  .sidebar a:hover {
+    color: #000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #999;
+  }
+  
+  .sidebar a.active {
+    color: #00a6ff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #c9dcdd;
+   
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  .graph-container {
+    margin-top: 10px;
+    padding-top: 20px;
+    position: relative;
+    width: 92%;
+    height: 450px;
+    border: 2px solid #00ff4c;
+    overflow: hidden;
+    margin-right: 50px;
+  }
+  
+  .graph-container::before {
+    content: "";
+    position: absolute;
+    width: calc(100% / 1);
+    height: 100%;
+    background: repeating-linear-gradient(to right, rgba(179, 243, 175, 0.3), rgba(179, 243, 175, 0.3) 1px, transparent 1px, transparent calc(100% / 12 - 1px));
+    top: 0;
+    left: 0;
+  }
+  
+  .graph-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: calc(100% / 1);
+    background: repeating-linear-gradient(to bottom, rgba(179, 243, 175, 0.3), rgba(179, 243, 175, 0.3) 1px, transparent 1px, transparent calc(100% / 10 - 1px));
+    top: 0;
+    left: 0;
+  }
+  
+  
+  .graph-container .vehicle {
+    width: 20px;
+    height: 20px;
+    background: red;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  
+  
+  
+  
+  .page-label {
+    color:#fff;
+    font-style: italic;
+    font-size: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  
+  .scenario-list {
+    
+  }
+  .scenario-list h2{
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .home {
+    margin-top: 10px;
+    margin-left: 30px;
+  }
+  
+  
+  
+  
+  .home .heading{
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .home select{
+    color: rgb(130, 129, 129);
+    padding: 2px;
+    /* padding: 5px; */
+    /* margin: 10px; */
+    border-radius: 5px;
+    background: #000;
+    width: 300px;
+    height: 32px;
+    font-size: 20px;
+    padding-left: 5px;
+    border-color: #ccc;
+    margin-bottom: 20px;
+  }
+  
+  .home .buttons{
+    display: flex;
+    margin-right: 110px;
+    margin-top: 10px;
+    justify-content: end;
+  }
+  
+  .home .buttons .start-simulation{
+    background-color: rgb(95, 255, 47);
+    color: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin: 10px;
+    border-radius: 3px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+   }
+  
+   .home .buttons .stop-simulation{
+    background-color: rgb(0, 170, 255);
+    color: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin: 10px;
+    border-radius: 3px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+   
+   }
+  
+  .table{
+    color:#fff;
+    /* background-color: dimgray; */
+    border-collapse: collapse;
+    text-align: center;
+    width: 92%;
+  }
+  
+  .table-head{
+    color:#fff;
+    background-color: dimgray;
+  
+    
+  }
+  
+  .table-head th{
+    color:#fff;
+    /* background-color: #000; */
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  
+  .table-body td{
+    color:#000;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
+   
+   
+  }
+  
+  .table-body tr {
+    border-bottom: 2px solid #000;
+    padding-right: 20px; /* Add your desired line color */
+  }
+  
+  .table-body td button{
+    color: #000;
+    font-size: 20px;
+    border: none;
+    background: #fff;
+  }
+  
+  
+  .scenario-list .table button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .scenario-list .table button:focus {
+    outline: none;
+  }
+  
+  
+  .add-scenario{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 100px;
+    
+  }
+  
+  .add-scenario h1{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .scenario-form{
+    display: flex;
+    color: #fff;
+    font-size: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .scenario-form label{
+    padding-bottom: 5px;
+  }
+  
+  .scenario-form .inpt{
+    display: grid;
+    padding: 10px;
+    
+  }
+  
+  .scenario-form .input-field{
+    color: rgb(209, 209, 209);
+    padding: 7px;
+    /* margin: 10px; */
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+  }
+  
+  .add-scenario .buttons{
+    display: flex;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-top: 10px;
+   
+  }
+  
+  .add-scenario .buttons .add{
+   background-color: rgb(95, 255, 47);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+  }
+  
+  .add-scenario .buttons .reset{
+   background-color: rgb(255, 115, 46);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .add-scenario .buttons .back{
+   background-color: rgb(0, 170, 255);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  
+  }
+  
+  .input-field::-webkit-inner-spin-button,
+  .input-field::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove spinner arrows in Chrome/Safari */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .input-field::-moz-number-spin-box {
+    -moz-appearance: textfield; /* Remove spinner arrows in Firefox */
+  }
+  
+  
+  .all-scenario-top{
+    display: flex;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 60px;
+  }
+  
+  
+  .all-scenario-top .buttons{
+    display: flex;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-top: 10px;
+  }
+  
+  .all-scenario-top .buttons .add-vehicle{
+   background-color: rgb(95, 255, 47);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+  }
+  
+  .all-scenario-top .buttons .deleteall{
+   background-color: rgb(255, 115, 46);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .all-scenario-top .buttons .add-scenario {
+   background-color: rgb(0, 170, 255);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .add-vehicle{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 40px;
+  }
+  
+  .add-vehicle h1{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .vehicle-form{
+    display: grid;
+    color: #fff;
+    font-size: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .vehicle-form label{
+    padding-bottom: 5px;
+  }
+  
+  .vehicle-form .first-row-inputs{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .vehicle-form .second-row-inputs{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .vehicle-form .inpt{
+    display: grid;
+    padding: 10px;
+    height: 80px;
+    
+  }
+  
+  .vehicle-form .input-field{
+    color: rgb(143, 143, 143);
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+  }
+  .vehicle-form .input-field-warn{
+    color: rgb(143, 143, 143);
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+    border: 1px solid #ff0000;
+  }
+  
+  
+  
+  
+  .vehicle-form .input-field-select{
+    color: rgb(130, 129, 129);
+    padding: 2px;
+    /* padding: 5px; */
+    /* margin: 10px; */
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 32px;
+    font-size: 20px;
+    padding-left: 5px;
+  }
+  
+  
+  
+  .add-vehicle .buttons{
+    display: flex;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-top: 10px;
+  }
+  
+  .add-vehicle .buttons .add{
+   background-color: rgb(95, 255, 47);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-vehicle .buttons .reset{
+   background-color: rgb(255, 115, 46);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .add-vehicle .buttons .back{
+   background-color: rgb(0, 170, 255);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  
+  }
+  
+  .input-field::-webkit-inner-spin-button,
+  .input-field::-webkit-outer-spin-button {
+    -webkit-appearance: none; 
+    margin: 0;
+  }
+  
+  .input-field::-moz-number-spin-box {
+    -moz-appearance: textfield; 
+  }
+  
+  
+  /* .input-warning {
+    border: 2px solid red;
+  } */
+  
+  .input-warning {
+    border-color: red;
+    background: #fff;
+  }
+  
+  .input-field.input-warning {
+    border-color: red !important;
+    background: #fff;
+  }
+  
+  
+  .warning {
+    color: red;
+    font-size: 0.8em;
+    background: rgb(255, 192, 192);
+    border-radius: 5px;
+    padding: 4px;
+    /* margin-top: 5px; */
+  }
+  
+  
+  
+  /* edit vehicle form */
+  
+  
+  .edit-vehicle{
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 40px;
+  }
+  
+  .edit-vehicle h1{
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .edit-vehicle-form{
+    display: grid;
+    color: #fff;
+    font-size: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(56, 56, 56);
+    border-radius: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  
+  .edit-vehicle-form label{
+    padding-bottom: 5px;
+  }
+  
+  .edit-vehicle-form .first-row-inputs{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .edit-vehicle-form .second-row-inputs{
+    display: flex;
+   
+  }
+  
+  .edit-vehicle-form .inpt{
+    display: grid;
+    padding: 10px;
+    height: 80px;
+    
+  }
+  
+  .edit-vehicle-form .input-field{
+    color: rgb(143, 143, 143);
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+  }
+  .edit-vehicle-form .input-field-warn{
+    color: rgb(143, 143, 143);
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+    border: 1px solid #ff0000;
+  }
+  
+  
+  
+  
+  .edit-vehicle-form .input-field-select{
+    color: rgb(130, 129, 129);
+    padding: 2px;
+    /* padding: 5px; */
+    /* margin: 10px; */
+    border-radius: 5px;
+    background: #000;
+    border: none;
+    width: 300px;
+    height: 32px;
+    font-size: 20px;
+    padding-left: 5px;
+  }
+  
+  
+  
+  .edit-vehicle .buttons{
+    display: flex;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-top: 10px;
+  }
+  
+  .edit-vehicle .buttons .add{
+   background-color: rgb(95, 255, 47);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .edit-vehicle .buttons .reset{
+   background-color: rgb(255, 115, 46);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .edit-vehicle .buttons .back{
+   background-color: rgb(0, 170, 255);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  
+  }
+  
+  .input-field::-webkit-inner-spin-button,
+  .input-field::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove spinner arrows in Chrome/Safari */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .input-field::-moz-number-spin-box {
+    -moz-appearance: textfield; /* Remove spinner arrows in Firefox */
+  }
+  
+  
+   .buttons{
+    display: flex;
+    margin-left: 40px;
+    margin-right: 50px;
+    margin-top: 10px;
+   
+  }
+  
+  .buttons .add{
+   background-color: rgb(95, 255, 47);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+  }
+  
+   .buttons .reset{
+   background-color: rgb(255, 115, 46);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  
+  .buttons .back{
+   background-color: rgb(0, 170, 255);
+   color: #fff;
+   padding-left: 15px;
+   padding-right: 15px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+   margin: 10px;
+   border-radius: 3px;
+   border: none;
+   font-size: 16px;
+   cursor: pointer;
+  
+  }
+  

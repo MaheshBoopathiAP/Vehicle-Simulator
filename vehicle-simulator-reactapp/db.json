@@ -1,9 +1,9 @@
 {
   "scenarios": [
     {
-      "id": "1",
       "name": "Downtown Traffic",
-      "time": 30
+      "time": 28,
+      "id": "1"
     },
     {
       "id": "2",
@@ -161,6 +161,15 @@
       "speed": 7,
       "direction": "Backwards",
       "scenarioId": 5
+    },
+    {
+      "name": "Truck",
+      "initialPositionX": 130,
+      "initialPositionY": 140,
+      "speed": 12,
+      "direction": "Towards",
+      "scenarioId": "1",
+      "id": "4YlV-pH"
     }
   ],
   "routes": {
