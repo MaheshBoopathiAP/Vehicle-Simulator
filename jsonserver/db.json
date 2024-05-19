@@ -1,76 +1,166 @@
 {
   "scenarios": [
     {
-      "name": "City Traffic1",
-      "time": 120,
-      "id": "1"
+      "id": "1",
+      "name": "Downtown Traffic",
+      "time": 30
     },
     {
       "id": "2",
-      "name": "Highway Cruise",
-      "time": 300
+      "name": "Highway Commute",
+      "time": 28
     },
     {
-      "id": "15ed",
-      "name": "Shara",
-      "time": 20
+      "id": "3",
+      "name": "Suburban Roads",
+      "time": 34
     },
     {
-      "id": "685c",
-      "name": "Thenu",
-      "time": 12
+      "id": "4",
+      "name": "Industrial Area",
+      "time": 40
     },
     {
-      "name": "Aswin",
-      "time": 12,
-      "id": "zqYWfwy"
+      "id": "5",
+      "name": "Residential Streets",
+      "time": 32
     }
   ],
   "vehicles": [
     {
       "id": "1",
-      "name": "Car A",
-      "initialPositionX": 10,
-      "initialPositionY": 20,
-      "speed": 5,
+      "name": "Sedan",
+      "initialPositionX": 100,
+      "initialPositionY": 150,
+      "speed": 10,
       "direction": "Towards",
       "scenarioId": 1
     },
     {
       "id": "2",
-      "name": "Truck B",
-      "initialPositionX": 50,
-      "initialPositionY": 75,
-      "speed": 4,
+      "name": "SUV",
+      "initialPositionX": 300,
+      "initialPositionY": 200,
+      "speed": 8,
       "direction": "Backwards",
       "scenarioId": 1
     },
     {
       "id": "3",
-      "name": "Motorcycle C",
-      "initialPositionX": 107,
-      "initialPositionY": 100,
-      "speed": 7,
+      "name": "Motorcycle",
+      "initialPositionX": 500,
+      "initialPositionY": 250,
+      "speed": 15,
       "direction": "Upwards",
-      "scenarioId": 2
+      "scenarioId": 1
     },
     {
       "id": "4",
-      "name": "Bus D",
-      "initialPositionX": 150,
-      "initialPositionY": 200,
-      "speed": 2,
+      "name": "Truck",
+      "initialPositionX": 700,
+      "initialPositionY": 100,
+      "speed": 6,
       "direction": "Downwards",
       "scenarioId": 2
     },
     {
-      "id": "4c65",
-      "name": "saran",
-      "initialPositionX": 120,
-      "initialPositionY": 140,
+      "id": "5",
+      "name": "Van",
+      "initialPositionX": 400,
+      "initialPositionY": 350,
+      "speed": 7,
+      "direction": "Towards",
+      "scenarioId": 2
+    },
+    {
+      "id": "6",
+      "name": "Bus",
+      "initialPositionX": 200,
+      "initialPositionY": 300,
       "speed": 5,
+      "direction": "Backwards",
+      "scenarioId": 2
+    },
+    {
+      "id": "7",
+      "name": "Convertible",
+      "initialPositionX": 800,
+      "initialPositionY": 200,
+      "speed": 12,
       "direction": "Upwards",
-      "scenarioId": 1
+      "scenarioId": 3
+    },
+    {
+      "id": "8",
+      "name": "Pickup Truck",
+      "initialPositionX": 600,
+      "initialPositionY": 400,
+      "speed": 9,
+      "direction": "Downwards",
+      "scenarioId": 3
+    },
+    {
+      "id": "9",
+      "name": "Mini Cooper",
+      "initialPositionX": 100,
+      "initialPositionY": 50,
+      "speed": 11,
+      "direction": "Towards",
+      "scenarioId": 3
+    },
+    {
+      "id": "10",
+      "name": "Sports Car",
+      "initialPositionX": 900,
+      "initialPositionY": 300,
+      "speed": 14,
+      "direction": "Upwards",
+      "scenarioId": 4
+    },
+    {
+      "id": "11",
+      "name": "Delivery Van",
+      "initialPositionX": 300,
+      "initialPositionY": 400,
+      "speed": 6,
+      "direction": "Backwards",
+      "scenarioId": 4
+    },
+    {
+      "id": "12",
+      "name": "Taxi",
+      "initialPositionX": 500,
+      "initialPositionY": 100,
+      "speed": 8,
+      "direction": "Downwards",
+      "scenarioId": 4
+    },
+    {
+      "id": "13",
+      "name": "Electric Car",
+      "initialPositionX": 150,
+      "initialPositionY": 200,
+      "speed": 10,
+      "direction": "Towards",
+      "scenarioId": 5
+    },
+    {
+      "id": "14",
+      "name": "Scooter",
+      "initialPositionX": 350,
+      "initialPositionY": 300,
+      "speed": 12,
+      "direction": "Upwards",
+      "scenarioId": 5
+    },
+    {
+      "id": "15",
+      "name": "Bike",
+      "initialPositionX": 750,
+      "initialPositionY": 250,
+      "speed": 7,
+      "direction": "Backwards",
+      "scenarioId": 5
     }
   ],
   "routes": {
