@@ -128,7 +128,6 @@ const HomePage = () => {
     const fetchVehicles = async () => {
       try {
         if (selectedScenarioId) {
-          // Call the getVehiclesByScenarioId function to fetch vehicles by scenario ID
           const vehiclesData = await getVehiclesByScenarioId(selectedScenarioId);
           setVehicles(vehiclesData);
         }
@@ -138,7 +137,7 @@ const HomePage = () => {
     };
 
     fetchVehicles();
-  }, [selectedScenarioId]); // Fetch vehicles whenever selectedScenarioId changes
+  }, [selectedScenarioId]);
   
   useEffect(() => {
     if (simulationInterval) {
